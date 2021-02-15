@@ -21,3 +21,18 @@
     width: 200px;
     height: 200px;
 }
+
+.pointer{
+    cursor: pointer;
+}
+
+.w100{
+    width: 100px;
+}
+.w130{
+    width: 130px;
+}
+.avatar{
+    width: 75px;
+    border-radius: 100%;
+}

@@ -8,6 +8,7 @@ import { RegisterForm } from '../interfaces/register-form.interface';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { Usuario } from '../models/usuario.models';
+import { CargarUsuario } from '../interfaces/cargar-usuario.interfaces';
 
 const base_url = environment.base_url;
 declare const gapi: any;
@@ -32,7 +33,15 @@ export class UsuarioService {
   }
 
   get uidUsuario(): string {
-    return this.usuario.id || "";
+    return this.usuario.uid || "";
+  }
+
+  get headers() {
+    return {
+      headers: {
+        "x-token": this.token
+      }
+    }
   }
 
   /**
@@ -69,19 +78,54 @@ export class UsuarioService {
       );
   }
 
+  /**
+   * 
+   * @param data 
+   */
   actualizarUsuario(data: { email: string, nombre: string, role: string }) {
-
     data = {
       ...data,
       role: this.usuario.role
     }
-    return this.http.put(`${base_url}/usuarios/${this.uidUsuario}`, data, {
-      headers: {
-        "x-token": this.token
-      }
-    });
+    return this.http.put(`${base_url}/usuarios/${this.uidUsuario}`, data, this.headers);
   }
 
+  /**
+   * 
+   * @param usuario 
+   */
+  guardarUsuario(usuario: Usuario) {
+    return this.http.put(`${base_url}/usuarios/${usuario.uid}`, usuario, this.headers);
+  }
+
+  /**
+   * 
+   */
+  cargarUsuario(desde: number) {
+
+    return this.http.get<CargarUsuario>(`${base_url}/usuarios?desde=${desde}`, this.headers)
+      .pipe(
+        map(resp => {
+          const usuario = resp.usuario.map(user => new Usuario(user.nombre, user.email, "",
+            user.google, user.img, user.role, user.uid));
+          console.log(resp);
+
+          return {
+            total: resp.total,
+            usuario
+          };
+        })
+      )
+  }
+
+  /**
+   * 
+   * @param usuario 
+   */
+  borrarUsuario(usuario: Usuario) {
+    return this.http.delete(`${base_url}/usuarios/${usuario.uid}`, this.headers);
+
+  }
 
   /**
    * 
@@ -96,6 +140,9 @@ export class UsuarioService {
       );
   }
 
+  /**
+   * 
+   */
   loguot() {
     localStorage.removeItem("token");
 
@@ -108,9 +155,10 @@ export class UsuarioService {
 
   }
 
-
+  /**
+   * 
+   */
   googleInit() {
-
     return new Promise(resolve => {
       gapi.load('auth2', () => {
         this.auth2 = gapi.auth2.init({

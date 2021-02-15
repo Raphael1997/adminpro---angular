@@ -6,12 +6,14 @@ import { CommonModule } from '@angular/common';
 /* Components */
 import { DonaComponent } from './dona/dona.component';
 import { IncrementadorComponent } from './incrementador/incrementador.component';
+import { ModalImagenComponent } from './modal-imagen/modal-imagen.component';
 
 @NgModule({
-  declarations: [IncrementadorComponent, DonaComponent],
+  declarations: [IncrementadorComponent, DonaComponent, ModalImagenComponent],
   exports: [
     IncrementadorComponent,
-    DonaComponent
+    DonaComponent,
+    ModalImagenComponent
   ],
   imports: [
     CommonModule,

@@ -30,6 +30,9 @@ export class PerfilComponent implements OnInit {
     });
   }
 
+  /**
+   * 
+   */
   actualizarPerfil() {
     console.log(this.perfilForm.value);
     this.usuarioService.actualizarUsuario(this.perfilForm.value).subscribe(resp => {
@@ -42,6 +45,10 @@ export class PerfilComponent implements OnInit {
     });
   }
 
+  /**
+   * 
+   * @param data 
+   */
   cambiarImagen(data: File) {
     this.imagenSubir = data;
 
@@ -57,8 +64,11 @@ export class PerfilComponent implements OnInit {
     }
   }
 
+  /**
+   * 
+   */
   subirImagen() {
-    this.subirArchivoService.actualizarFoto(this.imagenSubir, "usuarios", this.usuario.id).then(img => {
+    this.subirArchivoService.actualizarFoto(this.imagenSubir, "usuarios", this.usuario.uid).then(img => {
       this.usuario.img = img
     })
   }
