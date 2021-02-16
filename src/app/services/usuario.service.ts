@@ -100,6 +100,7 @@ export class UsuarioService {
 
   /**
    * 
+   * @param desde 
    */
   cargarUsuario(desde: number) {
 

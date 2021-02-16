@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Hospital } from '../models/hospital.models';
 import { Usuario } from '../models/usuario.models';
 
 const base_url = environment.base_url;
@@ -32,27 +33,22 @@ export class BusquedasService {
         map((resp: any) => {
           const usuarios = resp.resultado.map(user => new Usuario(user.nombre, user.email, "",
             user.google, user.img, user.role, user.id));
-
-            return {
-              usuarios
-            }
+          return {
+            usuarios
+          }
         })
       )
+  }
 
-}
   /**
    * 
-   *         map(resp => {
-          const usuario = resp.usuario.map(user => new Usuario(user.nombre, user.email, "",
-            user.google, user.img, user.role, user.id));
-          console.log(resp);
-          
-          return {
-            total: resp.total,
-            usuario
-          };
-        })
-      )
+   * @param tipo 
+   * @param termino 
    */
+  buscarHospital(tipo: "usuarios" | "hospitales" | "medicos", termino: string = "") {
+
+    return this.http.get<any[]>(`${base_url}/todo/coleccion/${tipo}/${termino}`, this.headers);
+  }
+
 
 }

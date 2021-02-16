@@ -13,4 +13,9 @@ export class MedicosComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  buscarMedico(termino: string) {
+    console.log(termino);
+    
+  }
+
 }
