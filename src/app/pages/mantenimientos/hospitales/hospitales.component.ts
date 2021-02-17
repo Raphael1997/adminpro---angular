@@ -30,7 +30,7 @@ export class HospitalesComponent implements OnInit {
 
   buscarHospital(buscador: string) {
     if (buscador !== "") {
-      this.busquedaService.buscarHospital('hospitales', buscador).subscribe((resp: any) => {
+      this.busquedaService.buscarColeccion('hospitales', buscador).subscribe((resp: any) => {
         console.log(resp);
 
         this.hospitales = resp.resultado;

@@ -24,7 +24,6 @@ export class ModalImagenService {
     this.tipo = tipo;
     this.id = id;
     this.img = img;
-    // http://localhost:3005/api/upload/usuarios/840c9e23-6109-4a84-af9b-f98aabb21271.png
     if (img.includes("https")) {
       this.img = img;
     } else {

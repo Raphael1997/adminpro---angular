@@ -2,14 +2,14 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <input type="text" class="form-control" placeholder="Buscar medico..." 
-                (keyup)="buscarMedico(buscar.value)" #buscar>
+                <input type="text" class="form-control" placeholder="Buscar medico..."
+                    (keyup)="buscarMedico(buscar.value)" #buscar>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row animated fadeIn fast">
+<div *ngIf="cargando" class="row animated fadeIn fast">
     <div class="col-12">
         <div class="alert alert-info text-center">
             <h4 class="alert-heading">Cargando</h4>
@@ -19,10 +19,16 @@
     </div>
 </div>
 
-<div class="row">
+<div *ngIf="!cargando" class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                <div class="text-right">
+                    <a class="btn btn-primary" routerLink="/dashboard/medico/nuevo">
+                        Crear medico
+                        <i class="fa fa-hospital-o"></i>
+                    </a>
+                </div>
                 <h4 class="card-title">Medicos registrados</h4>
                 <h6 class="card-subtitle">Medicos registrados en la aplicación</h6>
                 <div class="table-responsive">
@@ -35,22 +41,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>A</td>
-                                <td>B</td>
+                            <tr *ngFor="let medico of medicos">
+                                <td><img class="w100 avatar pointer" [src]="medico.img | imagen: 'medicos'"
+                                        [alt]="medico.nombre" (click)="abrirModal(medico)"></td>
+                                <td>{{medico.nombre}}</td>
                                 <td class="text-nowrap text-center">
-                                    <a href="#" data-toggle="tooltip" data-original-title="Editar"> <i
-                                            class="fa fa-pencil text-inverse m-r-10"></i> </a>
-                                    <a href="#" data-toggle="tooltip" data-original-title="Borrar"> <i
-                                            class="fa fa-close text-danger"></i> </a>
+                                    <a [routerLink]="['/dashboard/medico', medico._id]" data-toggle="tooltip"
+                                        data-original-title="Editar"> <i class="fa fa-pencil text-inverse m-r-10"></i>
+                                    </a>
+                                    <a class="pointer" (click)="borrarMedico(medico)" data-toggle="tooltip"
+                                        data-original-title="Borrar"> <i class="fa fa-close text-danger"></i> </a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <button class="btn btn-secondary">Siguiente</button>
-                &nbsp;
-                <button class="btn btn-secondary">Anterior</button>
             </div>
         </div>
     </div>

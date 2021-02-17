@@ -25,9 +25,10 @@ export class HospitalService {
     }
   }
 
+
   /**
- * 
- */
+   * 
+   */
   cargarHospitales() {
     return this.http.get(`${base_url}/hospitales`, this.headers)
       .pipe(

@@ -45,10 +45,9 @@ export class BusquedasService {
    * @param tipo 
    * @param termino 
    */
-  buscarHospital(tipo: "usuarios" | "hospitales" | "medicos", termino: string = "") {
+  buscarColeccion(tipo: "usuarios" | "hospitales" | "medicos", termino: string = "") {
 
     return this.http.get<any[]>(`${base_url}/todo/coleccion/${tipo}/${termino}`, this.headers);
   }
-
 
 }
