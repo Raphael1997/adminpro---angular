@@ -11,13 +11,13 @@ export class Usuario {
         public password?: string,
         public google?: boolean,
         public img?: string,
-        public role?: string,
+        public role?: "ADMIN_ROLE" | "USER_ROLE",
         public uid?: string,
     ) { }
 
     get imagenURL() {
 
-        if(!this.img) return `${base_url}/upload/usuarios/noImagen`;
+        if (!this.img) return `${base_url}/upload/usuarios/noImagen`;
 
         if (this.img.includes("https")) return this.img;
 

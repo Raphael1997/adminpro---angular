@@ -50,4 +50,14 @@ export class BusquedasService {
     return this.http.get<any[]>(`${base_url}/todo/coleccion/${tipo}/${termino}`, this.headers);
   }
 
+  /**
+   * 
+   * @param termino 
+   */
+  buscarGlobal(termino: string = "") {
+
+    return this.http.get<any[]>(`${base_url}/todo/${termino}`, this.headers);
+  }
+
+
 }

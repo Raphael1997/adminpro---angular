@@ -43,7 +43,7 @@
                         <tbody>
                             <tr *ngFor="let hospital of hospitales">
                                 <td>
-                                    <img class="w100 avatar pointer" [src]="hospital.img | imagen: 'hospitales'"
+                                    <img class="w100 pointer" [src]="hospital.img | imagen: 'hospitales'"
                                         [alt]="hospital.nombre" (click)="abrirModal(hospital)">
                                 </td>
                                 <td>

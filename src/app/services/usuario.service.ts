@@ -36,6 +36,10 @@ export class UsuarioService {
     return this.usuario.uid || "";
   }
 
+  get role(): "ADMIN_ROLE" | "USER_ROLE" {
+    return this.usuario.role;
+  }
+
   get headers() {
     return {
       headers: {
@@ -58,6 +62,7 @@ export class UsuarioService {
         const { email, google, nombre, img = "**", role, uid } = resp.usuario;
         this.usuario = new Usuario(nombre, email, "", google, img, role, uid);
         localStorage.setItem("token", resp.token);
+        localStorage.setItem("menu", JSON.stringify(resp.menu));
         return true;
       }),
       catchError(error => of(false)) // regresa un Observable
@@ -73,7 +78,8 @@ export class UsuarioService {
     return this.http.post(`${base_url}/usuarios`, formData)
       .pipe(
         tap((resp: any) => {
-          localStorage.setItem("token", resp.token)
+          localStorage.setItem("token", resp.token);
+          localStorage.setItem("menu", JSON.stringify(resp.menu));
         })
       );
   }
@@ -109,8 +115,6 @@ export class UsuarioService {
         map(resp => {
           const usuario = resp.usuario.map(user => new Usuario(user.nombre, user.email, "",
             user.google, user.img, user.role, user.uid));
-          console.log(resp);
-
           return {
             total: resp.total,
             usuario
@@ -136,7 +140,8 @@ export class UsuarioService {
     return this.http.post(`${base_url}/login`, formData)
       .pipe(
         tap((resp: any) => {
-          localStorage.setItem("token", resp.token)
+          localStorage.setItem("token", resp.token);
+          localStorage.setItem("menu", JSON.stringify(resp.menu));
         })
       );
   }
@@ -144,9 +149,10 @@ export class UsuarioService {
   /**
    * 
    */
+  //TODO: borrar menu
   loguot() {
     localStorage.removeItem("token");
-
+    localStorage.removeItem("menu");
     this.auth2.signOut().then(() => {
       this.ngzone.run(() => {
         this.router.navigateByUrl("/login");
@@ -180,7 +186,8 @@ export class UsuarioService {
     return this.http.post(`${base_url}/login/google`, { token })
       .pipe(
         tap((resp: any) => {
-          localStorage.setItem("token", resp.token)
+          localStorage.setItem("token", resp.token);
+          localStorage.setItem("menu", JSON.stringify(resp.menu));
         })
       );
   }

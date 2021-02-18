@@ -8,11 +8,13 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { AuthGuard } from '../guards/auth.guard';
+import { AdminGuard } from '../guards/admin.guard';
 import { PerfilComponent } from './perfil/perfil.component';
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
 import { MedicosComponent } from './mantenimientos/medicos/medicos.component';
 import { HospitalesComponent } from './mantenimientos/hospitales/hospitales.component';
 import { MedicoComponent } from './mantenimientos/medicos/medico.component';
+import { BusquedasComponent } from './busquedas/busquedas.component';
 
 const routes: Routes = [
     {
@@ -26,13 +28,17 @@ const routes: Routes = [
             { path: "promesa", component: PromesasComponent, data: { titulo: "Promesa" } },
             { path: "perfil", component: PerfilComponent, data: { titulo: "Perfil usuario" } },
             { path: "rxjs", component: RxjsComponent, data: { titulo: "RXJS" } },
+            { path: "buscar/:termino", component: BusquedasComponent, data: { titulo: "Busquedas" } },
             { path: "configuraciones-usuario", component: AccountSettingsComponent, data: { titulo: "Tema" } },
 
             //Mantenimientos
-            { path: "usuarios", component: UsuariosComponent, data: { titulo: "Usuario de aplicación" } },
             { path: "hospitales", component: HospitalesComponent, data: { titulo: "Hospital de aplicación" } },
             { path: "medicos", component: MedicosComponent, data: { titulo: "Medico de aplicación" } },
             { path: "medico/:id", component: MedicoComponent, data: { titulo: "Medico de aplicación" } },
+
+            // Admin ruta
+            { path: "usuarios", component: UsuariosComponent, canActivate: [AdminGuard], data: { titulo: "Usuario de aplicación" } },
+
         ]
     },
 
